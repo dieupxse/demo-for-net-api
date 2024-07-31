@@ -12,7 +12,7 @@ namespace DemoForNetAPI.Controllers;
 [ApiController]
 [Route("/api/[controller]")]
 [Authorize]
-public class AuthenticateController: ControllerBase
+public class AuthenticateController: ApiControllerBase
 {
     private IConfiguration _configuration;
     public AuthenticateController(IConfiguration configuration)
@@ -43,13 +43,19 @@ public class AuthenticateController: ControllerBase
     [HttpGet("me")]
     public ActionResult Me()
     {
-        var userIndentity = User.Identity as ClaimsIdentity;
+        /*var userIndentity = User.Identity as ClaimsIdentity;
         var userId = userIndentity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         var userEmail = userIndentity.FindFirst(ClaimTypes.Email)?.Value;
-        
+        */
+        // CurrentUserEmail come from ApiControllerBase
+        // Any Controller that inherit from ApiControllerBase can use CurrentUserId, CurrentUserEmail 
+        // anywhere, anytime.
+        // Plase check data
         var user = UserData.GetUsers()
-            .FirstOrDefault(e => e.Email == userEmail);
+            .FirstOrDefault(e => e.Email == CurrentUserEmail);
+        
         if (user == null) return Unauthorized();
+        
         return Ok(user);
     }
 

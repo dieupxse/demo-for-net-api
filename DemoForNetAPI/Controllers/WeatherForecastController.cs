@@ -6,7 +6,7 @@ namespace DemoForNetAPI.Controllers;
 [ApiController]
 [Route("[controller]")]
 [Authorize]
-public class WeatherForecastController : ControllerBase
+public class WeatherForecastController : ApiControllerBase
 {
     private static readonly string[] Summaries = new[]
     {
